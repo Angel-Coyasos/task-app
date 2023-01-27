@@ -15,7 +15,7 @@ function App() {
 
   return (
     <main 
-      className="bg-zinc-900 h-full">
+      className="bg-zinc-900  min-h-screen h-full">
         <div 
           className="container mx-auto p-10">
             <TaskForm />
