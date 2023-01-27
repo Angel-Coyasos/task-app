@@ -1,0 +1,229 @@
+GUIA APLICACION SETUP CPN REACT
+
+1- si bien node es una buena herrameinta para crear proyectos de react, existen algunas otras opciones que son mucho mas rapido, como al momenot d edessarrollar con estos generadores de proyectos es es vite.js, sirve para poder crear proyectos como vue, angular, svelte, lit, preact, react  y tambien funciona con node.
+
+INSTALACION DEL PROYECTO
+
+    1- creamos proyecto y le asiganamos el nombre, la libreria qeu deseamos usar y con qeu la deseamos usar 
+        - npm create vite@latest
+        - task-card
+        - react
+        - javascript
+
+    2- instalamos el proyecto
+    - npm install => instala los modulos para trabajar
+    - npm run dev => para iniciar proyecto
+    - npm run build => para compilar todo y genera la carpeta dist, con el codigo convertido.
+    - nos parece la url la clickkiamos para que nos lleve al navegador
+   
+
+2- ESTRUTURA PROYECTO
+    en vite si es reqeurido que los archivos sean de extencion .jsx, ademas se reemplaza el index.js por un archivo llamado main.jsx, en la carpeta assts van la imagnes y similares qeu vayamos a utilizar.
+
+    en el archivo main veremos un contexto que se llama React.strictMode, es similar al mododetsricto de js y se usa para mejorar la calidad.
+
+    tenemos un index.html que esta vez esta en la raiz del proyecto y no en la carpeta public, pero su funiconameinto sera le mismo.
+
+3- usar arbol de etiquetas (EMMET)
+
+    ul>li*4>a{enlace $}
+
+    se le conoce como emet y gera codigo en html, la anterio traduce crear un ul que dentro tenga 4 li, y dentro cada li tenga un etiqeuta ancla, y esta digan enlace $.
+
+    para usarlo en JSX, debe asegurarase de tener instala la configuracion al darle en f1 y escribir emmet y buscar inlcude languejes y agregar el qeu necesita.
+
+    con la extencon de recat podemos generar plantillas de ocmponentes de manera facil y rapida solo escribiendo RFCE
+
+    con control mas x eliminamos la linea en la que estamos parados.
+
+    => clop => console. log
+    => rfce => planmtilla conponente
+
+4- INCIO PROYECTO
+
+    1- MOSTRAR LISTA DE TAREAS (desde un archivo JSON)
+
+        creamos el componente task list y lo importamos, como no tenemos aun de donde extraer los datos creamos en nustra carpet un archivo .js para acerlo, ne el archivo tasks.js y generamos una variable y generajmos un arreglo asociativo con datos como id, titulo y description. y los exportamos para poder usarlos.
+
+        para poder mirar en la pantalla los datos de nuestro archivo DB tenemos qeu crear un estado. y lo guardamos en las variable scon los datos y la funcion, y lo dejamos con un arreglo vacio. posterior mente recorremos el arreglo con el .map y arrojamos lagun texto.
+
+        creamos un condicional para verificar si las tareas no tienene nada dentro. para retornar cuando haya tareas y cunado no haya, ya que inicialmente nuestro estado esta arrojando que no hay tareas.
+
+        nos podiamos acceder a la variable task porqeu uaun no estaba inicializada, y no nos traia nada para inicializarla debemos usar el efect para inicializar y traer los datos, al cual solo le vamos a indicar qeu carge la funcion setTasks y guarde la variable tas ahi, lo dejamos con el arreglo vacio para que cargue al iniciar solamente, nos arrajo un error por el nombre de las variables de nuestra funete de datos y la de el useState, asi que le asignamos un alias a la fuente de datos y es la qeu obtendremos con le metodo setTasks.
+
+        finalmente generamos nuestro texto en etiquetas html con la variable task que nos arroja nuetsra funcion de estado de varibales.
+
+    2- AÑADIR TAREA DESDE FORMULARIO 
+
+        necesitamos una porcion de interfaz, para el caso un fomrulario, lo creamos en otro componente. este fomrulario tiene un input y un boton, y ejecutamos el evento onchange para capturar lo qeu escribe y con los estados tartamos d eguartdar esos datos en una varivblel, indicandole al estado qeu inicialmente sera un string vacio.
+
+        posteriormente le decimos al evento onchange que guarda el valor en la funcion set, y verificamos el esatdo en la consola de react.
+        
+        le aplicamos un evento submit la formulario y le indicamos qeu ejecute una funcion aparte, esta para manejar el evento, par apoder ve rlo que imprime el formualrio ya que recarga la pagina, le pasamos a la funcion el parametros e y le la propiedad prvenDefault.
+
+        => ARBOL DE COMPONENTES o UI COMPONENTS TRIEE: es una vista de arbol que se puede usar apra representar un navegador del sistema de archivos qeu muestra carpetas y archivos, elementos qeu representan una carpeta se puede expandir para revelar el contenido de la carpeta, qeu puede ser archivos, carpetas o ambos.
+
+        subiremos le dato del task nuetsro datos a l componente app para luego pasarselo a tasklist y luego a tas form y asi podremos acceder al arreglo desde cualquier componente. una vez creados los estdos e importadas todas la dependencias en app, le pasamos e task como props  para pasarselo. tener en cuenta que si vamos a usar el props como atributo para pasarselo al coponente debemos de corregir los llamados a la varible task para este caso. agregandole "props.task" o en su caso pasar el parametro entre corchgete para evitar poner props {}.
+
+        react nos indica que para poder hacer lo de añadir tarear debemos de crear un funcion ejemplo createTask pasar}sela a el form y para que la llene y lugeo estae s ela devuelve a app, y app llena el arreglo.
+
+        crteramos la funcion, le pasamos el parametro task que esperamos qeu sea un arreglo, para poder añadir le pedimos que copie todo lo qeu tiene tasks, y le añade le objectop task esto con la siguiente sintaxis [...tasks, task], con lo cual se indica que copies todas las tareas pero me genera un nuevo arreglo con la tarea nueva añadida y le pasamos la propiedad al componente.
+
+        por ultimo le pasamos la funicon como parametro al componente, y lo agregamos al manejaor de evnto qeu hemos creado previamente.
+
+        tenemos dos formas de hacer esto la interacion entre estos dos componente sy los datos.
+
+            APP COMPONMENTES
+                =>   function createTask(taskTitle, taskDescription) {
+                    setTasks( [...tasks, {
+                    id: tasks.length,
+                    title: taskTitle,
+                    description: taskDescription,
+                    }] )
+                }
+
+                 =>   function createTask(task) {
+                    setTasks( [...tasks, taks )
+                }
+
+            FORM COMPONENTS
+
+            => const handleSubmit = (e) => {
+                e.preventDefault();
+                createTask(title, description)
+            }
+
+            => const handleSubmit = (e) => {
+                e.preventDefault();
+                const newTaks = {
+                    title: title
+                    id: tasks.length
+                    description: description
+                }
+                createTask(newTaks)
+            }
+
+    3- SEPARAR COMPONENTES
+        separara componentes en sub componentes, para este caso primeramente separamos el componente que construye nuestro items de tareas, por ende los separamos en el componente taskCard, y lo importamos luego al TASkLIST con eso agregamos props al componente par amigrar datos hacia el taskCard y listo usamos los atributos que necesitamos de este.
+
+        posterior mente vamos a mirar la descripcion cabe resaltar qeu para el momento ya esta la hecha la descripcion.
+
+        organizamos nuestros archivos en una carpeta, al igual qe una carpeta para el archivo fuente de datos.
+
+
+        una vez modularizamos todo, vamos a organizar algo de logtica, en el manejador de evento para limpiar los imput al enviar los datos.
+
+        por ultimo le añadimos un efecto de focus.
+
+    4- ELIMINAR TAREAS
+
+    en cada tarjeta creamo sun boton qeu diga eliminar tarea, obtenemos nuetsro id, luiego generamos la funcion para eliminar como lo indica react, que es generando un nuevo arreglo, usamos la funcion filter.
+
+    creamos la funicon delete task de momento para mostarr en consola solamente, posteriormente le pasamos esa funicon al compoente tasLIst donde no la vamos a utilizar, si no que se l avamos a pasar posteriormente a TaskCard.
+
+    <button onClick={ () => deleteTask(task.id) }>Eliminar Tarea</button>
+
+    asi qeuda nuestra funcion onclick, llamamos la funcion de leimnar dentro d eun funcion anonima para no afectar el onclick ya que si lo hacemos de forma directa se nos ejecutaria la funcion el numeor de veces qeu le poganmos como parametro.
+
+    con eso ya nuestro onclick estaria obteneiendo nuesrro id de form adinamica y ya con eso procedemos a la logica de nuestra funicon de leimnar, que es basicamente usar la funcion filter para validar si el task.id es diferente del task.id qeu le estan pasando y asi eliminaria, ya que rrecorera varias vecs nuestra task qeudando nuestra funcion de la siguiente manera.
+
+    => function deleteTask(taskId) {
+            tasks.filter( task => task.id !== taskId  )
+        }
+
+    asi qeuda despues de establecer lo en el estado para actualizar nuestros datos.
+
+    5- CREATE CONTEXT
+
+        vamos a mejorar un poco el codigo que tenemos hasta ahora. para rersolver lño de ṕasar las funciones por cada componente, lo qeu se conoce como PROP DRILING.
+
+        app es le componente que contiene el estado, y por eso debemos pasar las funiconalidades qeu deben pasar esto.
+
+        vamos a crear otro conponente, que sera el qeu contenga el app, qeu cumplira el contexto y contendra los estados. lo que nos brindara la opcion que desde cad componente podremos hacerder a todos los datos o contextos.
+
+        => CREAMOS LA CARPETA CONTEXT PARA TENER UN POCO MAS DE ORDEN, mdentro creamos nuetsro componente, y creamos la estructura, le indicamos qeu a dentro va a tener hijos con la propiedad childrem. osea props.children. que con eso lo qeu indicamos es qeu alli van a ir mas componentes.
+
+        resumeindo el contexto seria un compoennte padre que contendria los hijos, atreves de la propiedad children, y el padre compartiria todo con sus hijos.
+
+        para este caso lo usaremos de la siguient emanera.
+
+            1- importaremos la  funcion de react createContext, y la ejecutamos esta nos retornara un objecto qeu llamraremos taskContext, ese sera elnombre de nuestro contexto.
+
+            2- vamos a retornar un componente en nuestro context, recordemos qeu este se llama provider, por ende nuetsro TAskCOntext es le qeu almacenalos datos, y taskContextProvidier es el componente que engloba a los componentes. y dentro retornaremo el TaskContext.provider, y dentro los hijos children, con eso ya tenemos el componente naranja.
+
+            3- Exportamos la funicon y las constante de por separado.
+
+            4- un avez listo vamos al main.jsx, lo importamos y le decimos que todo va a estar dentro de ese componente. y lo asignamos como contenedor de APP osea de todos nuestros componentes.
+
+            5- todo los componentes tendran acceso a la informacion global qeu queramo si la declaramos en nuestro contexto y la pasamos a nuestro .provider, y para usarlo usamos unnfuncion llamada useContext donde lo queramos usar, react permite llamar varios contexto por eso le asignamos nombres. importamos le contexto que llamamos TaskContext y se lo apsamo como parametro a la funcion useContext. y podremos acceder a todos los datos de nuestro padre o contexto.
+
+    6- useContext
+        tenemos un tasform qeu recibo props del creat TASk, y el taskcadr tambien recibe de taslist que tambien los recibe como props. eso lo vamos a ordenar.
+
+        por ende el context seria u mejor lugar apra almacenar las funicones y organizar le codigo.
+        
+        1- migramos el estado y las funciones del componente app a nuestro archivo de estado. de esta forma todo slos componentes van a poder acceder a los valores
+
+        2- importamos le useState ya que lo necesitan para funcionar
+
+        3- le pasamos como parametro un arreglo al value, un arrgloq eu recibire las funciones qeu necesaitaremos, como task, createTAsk, deleteTAsk
+
+        4- ya con eso solo tendriamos que utilizar el arreglos, tambien el useEfect lo pasamos a taskContext, elcual se ejecutara cuando se cargue le contexto que creamos. e importamos a nuestro contexto nuestra funete de datos.
+
+        5- al pasar todo a nuetsro contexto global, tampoco necesitaremos pasar las funciones en nuestros componentes desde el app asi qeu los quitamos.
+
+        6- arreglamos el taskForm, lo primero es qeuitar el valor qeu tenia como props la funcion, e importamos el context para traer los datos necesarios, el use context, el taskcontexxt y lo utilizamos, y solo le pedimos le creteTASk qeu es el unico qeu usaremos en el form. y con eso ya nuestra logica se ejecutaria como lo hacia anteriormente ya que estamos obteniedno la funcion.
+
+        7- repetimos el paso anterio pero en tas lis, teniendo en cuneta qeu aca este necesita tasks, y deletasks  asi qeu le pasamos esos datos. y un paso extra es que aca estamos pasandole al taskCard la funcion de leiminar asi qeu lo qeuitamos qya que no es necesario debido a qeu este ya puede acceder directamente a el.
+
+        8- repetimos el proceso desde le task card, qeu solo usaremos le deleteTasks, y hacemos le remmplazo e importacion, el tasks en este caso si lo vamos a seguir obtenienod desde taskList, ya que el task list lo esta recorriendo, y luego s elo pasa al taskCard.
+
+    ya con eso hemos optimizado nuestro codigo, y cualquier props o funicon o cualqueir cosa qeu vayamos a necesitar en nuestros componentes lo podremos definir en nuestro TaskContext y usarlo donde lo necesitemos.
+
+    7- TailwindCSS
+    es un framework de CSS el cual sirve para poder estilar sin nigun problema, tiene algunas clases ya creadas con nombre descriptivos y nos evita que estemos nombrando las clases nosotros mismos y permite reducir el peso dle codigo css cuando esta en producion al usar otro modula llamado PostCSS
+
+        => buscamos la pagina
+        => le damos get started
+        => guides
+        => vite
+        => npm install -D tailwindcss postcss autoprefixer
+        => npx tailwindcss init -p
+
+        => modificamos archivo tailwind.config.cjs
+            /** @type {import('tailwindcss').Config} */
+            module.exports = {
+            content: [
+                "./index.html",
+                "./src/**/*.{js,ts,jsx,tsx}",
+            ],
+            theme: {
+                extend: {},
+            },
+            plugins: [],
+            }
+
+        => poner en index.css
+            @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+
+        => corremos proyecto
+
+    instala extencion que te ayudara a autocompletar clases de este framework, tailwind css
+
+    8 => deploy en GITHUB PAGES
+
+        1- una vez terminamos de desarrollar cancelamos el proceso de la consola.
+
+        2- y ejecutamos el comanod para compilar npm run build, lo que genera nuetsro proyecto para producion, convierte todos nuestros archiuvos en archivos finales. son archivos estaticos.
+
+        3- creamos repositoprio
+
+        4- iniciamos repositorio local
+
+        5- añadimos archivos
+
+        6- commitiamos archivos
+        
+        7- enviamos archivos.
